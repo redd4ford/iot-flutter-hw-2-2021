@@ -44,6 +44,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var orientation = MediaQuery.of(context).orientation;
+
+    var toolbarRowHeight =
+        orientation == Orientation.portrait ? size.height / 8 : size.width / 10;
+    var centerColumnWidth = size.width / 10;
+    var carouselIndicatorWidth =
+        size.height / (size.height / size.width * 2.25);
+    var appLogoSize = orientation == Orientation.portrait
+        ? size.width / 10
+        : size.height / 10;
+
+    const cardTitleFontSize = 28.0;
+    const cardFullNameFontSize = 24.0;
+    const standardTextFontSize = 14.0;
 
     final bgColors = [
       const Color.fromRGBO(53, 74, 101, 1.0),
@@ -72,8 +86,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: bgColors[_index],
       appBar: AppBar(
-          toolbarHeight: size.height / 8,
-          titleSpacing: size.width / 12,
+          toolbarHeight: toolbarRowHeight,
+          titleSpacing: centerColumnWidth,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,17 +95,15 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 child: SvgPicture.network(
                   'https://upload.wikimedia.org/wikipedia/commons/8/89/DiiaLogo.svg',
-                  height: size.height >= size.width
-                      ? size.width / 8
-                      : size.height / 12,
-                  width: size.height >= size.width
-                      ? size.width / 8
-                      : size.height / 12,
+                  height: appLogoSize,
+                  width: appLogoSize,
                 ),
               ),
-              const Icon(
+              Icon(
                 Icons.qr_code_scanner_rounded,
-                size: 32,
+                size: orientation == Orientation.portrait
+                    ? toolbarRowHeight / 4
+                    : toolbarRowHeight / 2,
               ),
             ],
           ),
@@ -120,28 +132,31 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.width / 20),
+                                horizontal: centerColumnWidth / 2),
                             child: Text(
                               cards[i].title,
                               textAlign: TextAlign.justify,
                               style: const TextStyle(
-                                  fontSize: 28, color: Colors.white),
+                                  fontSize: cardTitleFontSize,
+                                  color: Colors.white),
                             ),
                           ),
                           Text(
                             cards[i].fullName,
                             textAlign: TextAlign.start,
                             style: const TextStyle(
-                                fontSize: 24, color: Colors.white),
+                                fontSize: cardFullNameFontSize,
+                                color: Colors.white),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.width / 20),
+                                horizontal: centerColumnWidth / 2),
                             child: Text(
                               cards[i].text,
                               textAlign: TextAlign.justify,
                               style: const TextStyle(
-                                  fontSize: 14, color: Colors.white),
+                                  fontSize: standardTextFontSize,
+                                  color: Colors.white),
                             ),
                           ),
                         ],
@@ -163,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text(
                         'Дані оновлено ${DateFormat('dd.MM.yyyy о HH:mm').format(DateTime.now())}',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: standardTextFontSize,
                           color: Colors.white,
                         ),
                       ),
@@ -172,14 +187,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Expanded(
                   child: Container(
-                    padding: size.height >= size.width
-                        ? EdgeInsets.symmetric(horizontal: size.width / 2.5)
-                        : EdgeInsets.only(
-                            left:
-                                size.height / (size.height / size.width * 2.25),
-                            right:
-                                size.height / (size.height / size.width * 2.25),
-                          ),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: orientation == Orientation.portrait
+                            ? centerColumnWidth * 4
+                            : carouselIndicatorWidth),
                     child: GridView.builder(
                       itemCount: cards.length,
                       itemBuilder: (_, i) => Container(
@@ -190,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: cards.length,
-                        crossAxisSpacing: 5,
+                        crossAxisSpacing: cards.length.toDouble(),
                       ),
                     ),
                   ),
@@ -223,8 +234,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Меню',
           ),
         ],
-        selectedLabelStyle: const TextStyle(fontSize: 12),
-        unselectedLabelStyle: const TextStyle(fontSize: 12),
+        selectedLabelStyle: const TextStyle(fontSize: standardTextFontSize),
+        unselectedLabelStyle: const TextStyle(fontSize: standardTextFontSize),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
       ),
