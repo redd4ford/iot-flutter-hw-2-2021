@@ -49,6 +49,9 @@ class _HomePageState extends State<HomePage> {
     var toolbarRowHeight =
         orientation == Orientation.portrait ? size.height / 8 : size.width / 10;
     var centerColumnWidth = size.width / 10;
+    var iconsSize = orientation == Orientation.portrait
+        ? toolbarRowHeight / 4
+        : toolbarRowHeight / 2;
     var carouselIndicatorWidth =
         size.height / (size.height / size.width * 2.25);
     var appLogoSize = orientation == Orientation.portrait
@@ -101,9 +104,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Icon(
                 Icons.qr_code_scanner_rounded,
-                size: orientation == Orientation.portrait
-                    ? toolbarRowHeight / 4
-                    : toolbarRowHeight / 2,
+                size: iconsSize,
               ),
             ],
           ),
@@ -157,6 +158,20 @@ class _HomePageState extends State<HomePage> {
                               style: const TextStyle(
                                   fontSize: standardTextFontSize,
                                   color: Colors.white),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: centerColumnWidth / 2),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.more_horiz_rounded,
+                                  size: iconsSize,
+                                  color: Colors.white,
+                                ),
+                              ],
                             ),
                           ),
                         ],
