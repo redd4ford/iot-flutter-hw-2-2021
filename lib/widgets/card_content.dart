@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CardContent extends StatelessWidget {
+  static const loremIpsum =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed '
+      'do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris '
+      'nisi ut aliquip ex ea commodo consequat.';
+
   final String title;
   final String fullName;
   final String text;
@@ -12,8 +18,7 @@ class CardContent extends StatelessWidget {
       {Key? key,
       this.title = 'Document',
       this.fullName = 'Lorem Ipsum',
-      this.text =
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      this.text = loremIpsum,
       this.horizontalPadding = 0.0,
       this.fontSize = 0.0,
       this.iconsSize = 0.0})
